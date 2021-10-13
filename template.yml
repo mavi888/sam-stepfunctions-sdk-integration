@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: "App-video-processing"
+
+Parameters:
+  MySampleDataBucketName: 
+    Type: String
+  MySampleDataInputKey: 
+    Type: String
+
+Resources:
+  # Define a common IAM role to be used for all components of this app
+  ApplicationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "states.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: AppPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              -
+                Effect: Allow
+                Action:
+                - xray:PutTraceSegments
+                - xray:PutTelemetryRecords
+                - xray:GetSamplingRules
+                - xray:GetSamplingTargets
+                - transcribe:StartTranscriptionJob
+                - transcribe:GetTranscriptionJob
+                - translate:TranslateText
+                Resource: '*'
+              -
+                Effect: Allow
+                Action:
+                - s3:*
+                Resource: '*'
+
+  # An S3 Bucket for the data processing
+  DataBucket:
+    Type: AWS::S3::Bucket
+    Properties:  
+      BucketName : !Join ["",[!Ref "AWS::AccountId","-",!Ref "AWS::Region","-video-processing-example2"]]
+
+  StateMachineProcessVideoFile:
+    Type: AWS::Serverless::StateMachine
+    Properties:    
+      Type: "STANDARD"
+      Role: !GetAtt ApplicationRole.Arn
+      Name: !Join ["",[!Ref "AWS::AccountId","-",!Ref "AWS::Region","-video-processing-example1"]]
+      DefinitionUri: state-machine.asl.json
+      DefinitionSubstitutions:
+          SampleDataBucketName: !Ref MySampleDataBucketName 
+          SampleDataInputKey: !Ref MySampleDataInputKey 
+          S3BucketName: !Ref DataBucket
+          ApplicationRoleArn: !GetAtt ApplicationRole.Arn
+      Tracing:
+          Enabled: true
+      
