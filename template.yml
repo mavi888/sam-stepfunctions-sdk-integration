@@ -57,7 +57,7 @@ Resources:
       Type: "STANDARD"
       Role: !GetAtt ApplicationRole.Arn
       Name: !Join ["",[!Ref "AWS::AccountId","-",!Ref "AWS::Region","-video-processing-example1"]]
-      DefinitionUri: state-machine.asl.json
+      DefinitionUri: state-machine/state-machine.asl.json
       DefinitionSubstitutions:
           SampleDataBucketName: !Ref MySampleDataBucketName 
           SampleDataInputKey: !Ref MySampleDataInputKey 

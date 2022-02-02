@@ -1,0 +1,97 @@
+{
+  "StateMachines": {
+    "LocalTesting": {
+      "TestCases": {
+        "HappyPathTest": {
+          "GetSampleVideo": "GetSampleVideoMockedSuccess",
+          "StartTranscriptionJob": "StartTranscriptionJobMockedSuccess",
+          "CheckIfTranscriptionDone": "CheckIfTranscriptionDoneMockedSuccess",
+          "GetTranscriptionText": "GetTranscriptionTextMockedSucess",
+          "StartTextTranslation": "StartTextTranslationMockedSuccess"
+        },
+        "FileNotFoundTest": {
+          "GetSampleVideo": "GetSampleVideoMockedFailed"
+        }
+      }
+    }
+  },
+  "MockedResponses": {
+    "GetSampleVideoMockedSuccess": {
+      "0": {
+        "Return": {
+          "CopyObjectResult": {
+            "ETag": "\"de03e636b2b6f2ed24b691817ba510a5\"",
+            "LastModified": "2022-02-01T19:29:36Z"
+          }
+        }
+      }
+    },
+    "StartTranscriptionJobMockedSuccess": {
+      "0": {
+        "Return": {
+          "TranscriptionJob": {
+            "CreationTime": "2022-02-01T19:29:36.560Z",
+            "LanguageCode": "en-US",
+            "Media": {
+              "MediaFileUri": "s3://144824907653-eu-west-1-video-processing-example2/intro-step-functions.mp4"
+            },
+            "StartTime": "2022-02-01T19:29:36.591Z",
+            "TranscriptionJobName": "7905e912-c3c2-574d-3cd4-4366d64bccbe",
+            "TranscriptionJobStatus": "IN_PROGRESS"
+          }
+        }
+      }
+    },
+    "CheckIfTranscriptionDoneMockedSuccess": {
+      "0": {
+        "Return": {
+          "TranscriptionJob": {
+            "CompletionTime": "2022-02-01T19:30:12.317Z",
+            "CreationTime": "2022-02-01T19:29:36.560Z",
+            "LanguageCode": "en-US",
+            "Media": {
+              "MediaFileUri": "s3://144824907653-eu-west-1-video-processing-example2/intro-step-functions.mp4"
+            },
+            "MediaFormat": "mp4",
+            "MediaSampleRateHertz": 44100,
+            "Settings": {
+              "ChannelIdentification": false,
+              "ShowAlternatives": false
+            },
+            "StartTime": "2022-02-01T19:29:36.591Z",
+            "Transcript": {
+              "TranscriptFileUri": "https://s3.eu-west-1.amazonaws.com/144824907653-eu-west-1-video-processing-example2/transcribe.json"
+            },
+            "TranscriptionJobName": "7905e912-c3c2-574d-3cd4-4366d64bccbe",
+            "TranscriptionJobStatus": "COMPLETED"
+          }
+        }
+      }
+    },
+    "GetTranscriptionTextMockedSucess": {
+      "0": {
+        "Return": {
+          "Body": "{\"jobName\":\"7905e912-c3c2-574d-3cd4-4366d64bccbe\",\"accountId\":\"144824907653\",\"results\":{\"transcripts\":[{\"transcript\":\"Hi my name is  Mm hmm.\"}],\"items\":[{\"start_time\":\"6.54\",\"end_time\":\"7.3\",\"alternatives\":[{\"confidence\":\"1.0\",\"content\":\"Hi\"}],\"type\":\"pronunciation\"}]},\"status\":\"COMPLETED\"}" 
+        }
+      }
+    },
+    "StartTextTranslationMockedSuccess": {
+      "0": {
+        "Return": {
+            "SourceLanguageCode": "en",
+            "TargetLanguageCode": "es",
+            "TranslatedText": "Hola, me llamo Mm hmm."
+        }
+      }
+    },
+    "GetSampleVideoMockedFailed": {
+      "0": {
+        "Throw": {
+          "Error": "S3.NoSuchBucketException",
+          "Cause": "Server Exception while calling CopyObject API in S3 Service"
+        }
+      }
+    }
+   
+  }
+}
