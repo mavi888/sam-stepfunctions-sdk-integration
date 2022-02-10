@@ -1,3 +1,4 @@
 samconfig.toml
 state-machine/test/commands.txt
 .DS_Store
+.vscode/settings.json

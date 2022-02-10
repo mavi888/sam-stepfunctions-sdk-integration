@@ -1,6 +1,7 @@
 # AWS Step Functions - SDK Integrations
 
 _Infrastructure as code framework used_: AWS SAM, ASL
+
 _AWS Services used_: AWS Step functions, Amazon S3, Amazon Transcribe, Amazon Transcribe, Amazon Translate
 
 ## Summary of the demo
@@ -90,7 +91,7 @@ Check [`makefile`](./makefile) for details
 ## Links related to this code
 
 - Video about Step function Service Integration: https://youtu.be/jtmQJqaInT0
-- Video about testing Step functions using Mocked service integrations: TBD
+- Video about testing Step functions using Mocked service integrations: https://youtu.be/P3hEqxKxZe8
 - Launch blog post of Step function SDK service integration: https://aws.amazon.com/blogs/aws/now-aws-step-functions-supports-200-aws-services-to-enable-easier-workflow-automation/
 - Documentation on using Mocked Service Integration: https://docs.aws.amazon.com/step-functions/latest/dg/sfn-local-test-sm-exec.html#run-mocked-serv-integ-tests
 - Launch blog post of Mocked Service Integration: https://aws.amazon.com/blogs/compute/mocking-service-integrations-with-aws-step-functions-local/
